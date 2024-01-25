@@ -44,7 +44,7 @@ class CourseController extends Controller
         //         'organization_id'=>session('organization')->id,
         //     ])
         // ]);
-        
+
     }
 
     /**

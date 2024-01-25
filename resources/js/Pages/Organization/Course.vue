@@ -81,7 +81,7 @@
     <!-- Modal End-->
   </OrganizationLayout>
 </template>
-  
+
 <script>
 import OrganizationLayout from "@/Layouts/OrganizationLayout.vue";
 import CourseBuilder from "@/Components/Organization/CourseBuilder.vue";

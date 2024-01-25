@@ -108,7 +108,7 @@
     <!-- Modal End -->
   </OrganizationLayout>
 </template>
-  
+
 <script>
 import OrganizationLayout from "@/Layouts/OrganizationLayout.vue";
 import {
