@@ -29,7 +29,7 @@
               <a-button @click="moduleUpdateRecord(module)">Edit</a-button>
               <a-button @click="moduleDeleteRecord(module)" type="danger">Delete</a-button>
             </template>
-            
+
             <ul class="module-list">
               <template v-for="content in course.contents">
                 <li v-if="content.module == module.value" class="module-list-item">
@@ -90,7 +90,7 @@
     <!-- Modal End -->
   </OrganizationLayout>
 </template>
-  
+
 <script>
 import OrganizationLayout from "@/Layouts/OrganizationLayout.vue";
 import CourseBuilder from "@/Components/Organization/CourseBuilder.vue";
