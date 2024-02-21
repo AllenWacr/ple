@@ -41,27 +41,27 @@ class MediaController extends Controller
     public function store(Request $request)
     {
         // return response()->json(['message' => $request]);
-        $originImage = $request->content;
-        $images = $request->file($originImage);
-        if ($images) {
-            foreach ($images as $image) {
-                $imagename = $image->getClientOriginalName();
+        $originMedia = $request->content;
+        $media = $request->file($originMedia);
+        if ($media) {
+            foreach ($media as $m) {
+                $medianame = $m->getClientOriginalName();
                 $getId = auth()->user()->id;
-                $path = $image->storeAs((string)$getId . '/uploads', $imagename, 'image');
+                $path = $m->storeAs((string)$getId . '/uploads', $medianame, 'media');
 
-                // Store image into the database
+                // Store media into the database
                 // ...
 
                 // Samples
-                // $image->getSize();
-                // $image->getMimeType();
-                // $image->getClientOriginalExtension();
+                // $m->getSize();
+                // $m->getMimeType();
+                // $m->getClientOriginalExtension();
                 // ...
             }
 
-            return response()->json(['message' => 'Image uploaded successfully', 'path' => $path]);
+            return response()->json(['message' => 'Media uploaded successfully', 'path' => $path]);
         } else {
-            return response()->json(['message' => 'No images were uploaded'], 400);
+            return response()->json(['message' => 'No media were uploaded'], 400);
         }
     }
 
