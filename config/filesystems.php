@@ -95,6 +95,11 @@ return [
             'driver' => 'local',
             'root'   => public_path('media/file'),
             'url'    => env('APP_URL').'/media/file',
+        ],
+        'image' => [
+            'driver' => 'local',
+            'root'   => public_path('/media/image'),
+            'url'    => env('APP_URL').'/media/image',
         ]
 
 

@@ -40,7 +40,29 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return response()->json(['message' => $request]);
+        $originImage = $request->content;
+        $images = $request->file($originImage);
+        if ($images) {
+            foreach ($images as $image) {
+                $imagename = $image->getClientOriginalName();
+                $getId = auth()->user()->id;
+                $path = $image->storeAs((string)$getId . '/uploads', $imagename, 'image');
+
+                // Store image into the database
+                // ...
+
+                // Samples
+                // $image->getSize();
+                // $image->getMimeType();
+                // $image->getClientOriginalExtension();
+                // ...
+            }
+
+            return response()->json(['message' => 'Image uploaded successfully', 'path' => $path]);
+        } else {
+            return response()->json(['message' => 'No images were uploaded'], 400);
+        }
     }
 
     /**

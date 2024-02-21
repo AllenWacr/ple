@@ -175,6 +175,7 @@ export default {
         handleTypeChange(value) {
             console.log(value);
             this.selected.value = value;
+            // this.content.content = null;
         },
         onFinish() {
             this.$refs.modalRef.validateFields().then(() => {
@@ -201,12 +202,12 @@ export default {
             })
         },
         handleFileChange(info) {
-            console.log(info.file.originFileObj);
             if (info.file.status !== 'uploading') {
                 console.log(info.file, info.fileList);
             }
             if (info.file.status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully.`);
+                this.content.content == null ? this.content.content = info.file.response.path : this.content.content = this.content.content + "&&" + info.file.response.path;
             } else if (info.file.status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }

@@ -155,7 +155,7 @@ class CourseController extends Controller
 
     public function destroyModule(Course $course, Request $request) {
         // dd($course);
-        dd($request->all());
+        // dd($request->all());
         $modules = $course->modules;
         $newModules = [];
         
