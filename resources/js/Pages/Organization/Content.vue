@@ -47,6 +47,7 @@
                         <a-textarea v-model:value="content.content" />
                     </a-form-item>
                     <a-form-item v-else-if="this.selected.value=='FILE'" :label="$t('content')" name="content">
+                        <span v-if="this.content.content">Uploaded File: {{ this.content.content }}</span>
                         <a-upload-dragger
                             v-model:value="content.content"
                             :multiple="true"
@@ -175,7 +176,7 @@ export default {
         handleTypeChange(value) {
             console.log(value);
             this.selected.value = value;
-            // this.content.content = null;
+            this.content.content = null;
         },
         onFinish() {
             this.$refs.modalRef.validateFields().then(() => {
@@ -203,7 +204,7 @@ export default {
         },
         handleFileChange(info) {
             if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
+                // console.log(info.file, info.fileList);
             }
             if (info.file.status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully.`);
@@ -214,6 +215,7 @@ export default {
         },
         handleDrop(e) {
             console.log(e);
+            // this.$inertia.delete(route('manage.file.delete'), e)
         }
     }
 };
