@@ -29,6 +29,7 @@
                             :height="300" />
 
                     </a-form-item>
+
                     <a-form-item :label="$t('valid_at')" name="valid_at">
                         <a-date-picker v-model:value="article.valid_at" :format="dateFormat" :valueFormat="dateFormat" />
                     </a-form-item>

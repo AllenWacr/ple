@@ -134,7 +134,7 @@ Route::group([
     Route::resource('events', App\Http\Controllers\Organization\EventController::class)->names('manage.events');
     Route::resource('event/{event}/attendees', App\Http\Controllers\Organization\AttendeeController::class)->names('manage.event.attendees');
     Route::resource('configs', App\Http\Controllers\Organization\ConfigController::class)->names('manage.configs');
-    Route::get('image_upload', [App\Http\Controllers\Organization\UploaderController::class, 'image'])->name('manage.image_upload');
+    Route::post('image_upload', [App\Http\Controllers\Organization\UploaderController::class, 'image'])->name('manage.image_upload');
 });
 
 Route::group([
