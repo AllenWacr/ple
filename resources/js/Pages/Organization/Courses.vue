@@ -17,18 +17,29 @@
                         {{ column.i18n ? $t(column.i18n) : column.title }}
                     </template>
                     <template #bodyCell="{ column, text, record, index }">
-                        <template v-if="column.dataIndex == 'operation'">
-                            <inertia-link :href="route('manage.courses.edit', record.id)" class="ant-btn">{{ $t("detail")
-                            }}</inertia-link>
-                            <inertia-link :href="route('manage.course.contents.index', record.id)" class="ant-btn">{{
-                                $t("View contents") }}</inertia-link>
-                            <a-button @click="deleteRecord(record.id)" type="danger">Delete</a-button>
+                        <template v-if="column.dataIndex === 'operation'">
+                            <a-space>
+                                <inertia-link :href="route('manage.courses.edit', record.id)" class="ant-btn">
+                                    <a-icon :component="icons.EditOutlined" />
+                                    <span>{{ $t("Detail") }}</span>
+                                </inertia-link>
+                                <inertia-link :href="route('manage.course.contents.index', record.id)" class="ant-btn">
+                                    <a-icon :component="icons.EyeOutlined" />
+                                    <span>{{ $t("View contents") }}</span>
+                                </inertia-link>
+                                <a-button @click="deleteRecord(record.id)" type="danger">
+                                    <a-icon :component="icons.DeleteOutlined" />
+                                    <span>Delete</span>
+                                </a-button>
+                            </a-space>
                         </template>
-                        <template v-else-if="column.dataIndex == 'teachers'">
-                            <span v-for="teacher in record.teachers">{{ teacher.name }}, </span>
+                        <template v-else-if="column.dataIndex === 'teachers'">
+                            <span v-for="(teacher, index) in record.teachers" :key="index">
+                                {{ teacher.name }}<span v-if="index < record.teachers.length - 1">, </span>
+                            </span>
                         </template>
                         <template v-else>
-                            {{ record[column.dataIndex] }}
+                            {{ text }}
                         </template>
                     </template>
                 </a-table>
@@ -91,7 +102,7 @@ import {
     InfoCircleFilled,
 } from "@ant-design/icons-vue";
 import CropperModal from "@/Components/Member/CropperModal.vue";
-
+import { EditOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons-vue';
 export default {
     components: {
         OrganizationLayout,
@@ -100,6 +111,9 @@ export default {
         PlusOutlined,
         InfoCircleFilled,
         CropperModal,
+        EditOutlined,
+        EyeOutlined,
+        DeleteOutlined,
     },
     props: ["courses"],
     data() {
@@ -150,6 +164,11 @@ export default {
                 style: {
                     width: "150px",
                 },
+            },
+            icons: {
+                EditOutlined,
+                EyeOutlined,
+                DeleteOutlined
             },
         };
     },

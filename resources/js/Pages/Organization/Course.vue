@@ -18,44 +18,44 @@
         </div>
 
         <CourseBuilder :course="course">
-    <div class="flex-auto pb-3 text-left">
-      <a-button @click="createModuleRecord" type="primary">Create Module</a-button>
-    </div>
-    <a-collapse>
-      <template v-for="(module, index) in course.modules" :key="`module-${index}`">
-        <a-collapse-panel>
-          <template #header>
-            <div class="module-header">
-              <span>{{ module.label }}</span>
-              <a-space>
-                <a-button @click="moduleUpdateRecord(module)">Edit</a-button>
-                <a-button type="danger" @click="moduleDeleteRecord(module)">Delete</a-button>
-              </a-space>
+            <div class="flex-auto pb-3 text-left">
+                <a-button @click="createModuleRecord" type="primary">Create Module</a-button>
             </div>
-          </template>
-          <ul class="module-list">
-            <template v-for="(content, index) in course.contents" :key="`content-${index}`">
-              <li v-if="content.module == module.value" class="module-list-item">
-                <a-space align="center">
-                  {{ content.title }}
-                  <a-button @click="editRecord(content)" type="primary">Edit</a-button>
-                </a-space>
-              </li>
-            </template>
-          </ul>
-        </a-collapse-panel>
-      </template>
-    </a-collapse>
-    <a-collapse>
-      <a-collapse-panel header="Individual">
-        <ul class="module-list">
-          <template v-for="(content, index) in individualContents" :key="`individual-content-${index}`">
-            <li class="module-list-item">{{ content.title }}</li>
-          </template>
-        </ul>
-      </a-collapse-panel>
-    </a-collapse>
-  </CourseBuilder>
+            <a-collapse>
+                <template v-for="(module, index) in course.modules" :key="`module-${index}`">
+                    <a-collapse-panel>
+                        <template #header>
+                            <div class="module-header">
+                                <span>{{ module.label }}</span>
+                                <a-space>
+                                    <a-button @click="moduleUpdateRecord(module)">Edit</a-button>
+                                    <a-button type="danger" @click="moduleDeleteRecord(module)">Delete</a-button>
+                                </a-space>
+                            </div>
+                        </template>
+                        <ul class="module-list">
+                            <template v-for="(content, index) in course.contents" :key="`content-${index}`">
+                                <li v-if="content.module == module.value" class="module-list-item">
+                                    <a-space class="center">
+                                        {{ content.title }}
+                                        <a-button @click="editRecord(content)" type="primary">Edit</a-button>
+                                    </a-space>
+                                </li>
+                            </template>
+                        </ul>
+                    </a-collapse-panel>
+                </template>
+            </a-collapse>
+            <a-collapse>
+                <a-collapse-panel header="Individual">
+                    <ul class="module-list">
+                        <template v-for="(content, index) in individualContents" :key="`individual-content-${index}`">
+                            <li class="module-list-item">{{ content.title }}</li>
+                        </template>
+                    </ul>
+                </a-collapse-panel>
+            </a-collapse>
+        </CourseBuilder>
 
         <!-- Modal Start -->
         <a-modal v-model:visible="moduleCreateModal.isOpen" :title="$t(moduleCreateModal.title)" width="60%"
@@ -200,6 +200,10 @@ export default {
                 });
             })
         },
+        editRecord(content) {
+            console.log(content);
+            this.$inertia.visit(route('manage.course.contents.edit', { course: content.course_id, content: content.id }));
+        },
         moduleUpdateRecord(module) {
             this.moduleEditModal.data = { value: module.value, label: module.label };
             this.moduleEditModal.mode = "UPDATE";
@@ -239,7 +243,7 @@ export default {
             console.log(e);
             console.log(this.moduleDeleteModal.data)
             this.$refs.modalRef.validateFields().then(() => {
-                this.$inertia.delete(route('manage.course.destroyModule', this.course.id), this.moduleDeleteModal.data, {
+                this.$inertia.post(route('manage.course.destroyModule', this.course.id), this.moduleDeleteModal.data, {
                     onSuccess: (page) => {
                         console.log(page);
                         this.moduleDeleteModal.isOpen = false;
@@ -270,20 +274,22 @@ export default {
 </style>
 <style scoped>
 .module-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
+
 .module-list {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
+
 .module-list-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #e8e8e8;
-  padding: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 8px 0;
 }
 </style>

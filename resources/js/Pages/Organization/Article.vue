@@ -25,24 +25,9 @@
                         <a-input v-model:value="article.title_fn" />
                     </a-form-item>
                     <a-form-item :label="$t('content')" name="content_en">
-                        <!-- <ckeditor
-              ref="editorRef"
-              :editor="editor"
-              v-model="article.content_en"
-              :config="editorConfig"
-              :height="300"
-            /> -->
-                        <Editor api-key="fs8f4avhhydhmao5n61fyvvsfnf37oglrmo9aokc0inymoxi" :init="{
-                            toolbar_mode: 'sliding',
-                            plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                            tinycomments_mode: 'embedded',
-                            tinycomments_author: 'Author name',
-                            mergetags_list: [
-                                { value: 'First.Name', title: 'First Name' },
-                                { value: 'Email', title: 'Email' },
-                            ],
-                        }" initial-value="<p>This is the initial content of the editor</p>" />
+                        <ckeditor ref="editorRef" :editor="editor" v-model="article.content_en" :config="editorConfig"
+                            :height="300" />
+
                     </a-form-item>
                     <a-form-item :label="$t('valid_at')" name="valid_at">
                         <a-date-picker v-model:value="article.valid_at" :format="dateFormat" :valueFormat="dateFormat" />
@@ -96,23 +81,17 @@
 <script>
 import OrganizationLayout from "@/Layouts/OrganizationLayout.vue";
 import { defineComponent, reactive } from "vue";
-//import Editor from 'ckeditor5-custom-build/build/ckeditor';
+// import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import CKEditor from "@ckeditor/ckeditor5-vue";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import UploadAdapter from "@/Components/ImageUploadAdapter.vue";
-import Editor from '@tinymce/tinymce-vue';
+
 export default {
     components: {
         OrganizationLayout,
-        Editor,
+        ckeditor: CKEditor.component,
         UploadAdapter,
     },
-    //   components: {
-    //     OrganizationLayout,
-    //     ckeditor: CKEditor.component,
-    //     UploadAdapter,
-    //     //UploadAdapter
-    //   },
     props: ["classifies", "articleCategories", "article", "articles"],
     data() {
         return {

@@ -247,32 +247,97 @@ export default {
                 }
             })
         },
-        deleteRecord(courseId, contentId) {
-            this.deleteModal.data = {};
-            this.deleteModal.mode = "DELETE";
-            this.deleteModal.isOpen = true;
-            this.deleteModal.data.contentId = contentId;
-            this.deleteModal.data.courseId = courseId;
+        handleClickOutside(event) {
+            if (this.courseModule.edit && !this.$refs.input.contains(event.target)) {
+                this.courseModule.edit = false;
+            }
         },
-        deleteModalClose() {
-            console.log('Close delete modal');
-        },
-        onRecordDelete(e) {
-            console.log(e);
-            console.log(this.deleteModal.data)
-            this.$refs.modalRef.validateFields().then(() => {
-                this.$inertia.delete(route('manage.course.contents.destroy',
-                    { course: this.deleteModal.data.courseId, content: this.deleteModal.data.contentId }), {
-                    onSuccess: (page) => {
-                        console.log(page);
-                        this.deleteModal.isOpen = false;
-                    },
-                    onError: (err) => {
-                        console.log(err);
-                    }
-                });
-            })
-        }
+    },
+    mounted() {
+        document.addEventListener('click', this.handleClickOutside);
+    },
+    beforeDestroy() {
+        document.removeEventListener('click', this.handleClickOutside);
+    },
+    deleteRecord(courseId, contentId) {
+        this.deleteModal.data = {};
+        this.deleteModal.mode = "DELETE";
+        this.deleteModal.isOpen = true;
+        this.deleteModal.data.contentId = contentId;
+        this.deleteModal.data.courseId = courseId;
+    },
+    deleteModalClose() {
+        console.log('Close delete modal');
+    },
+    onRecordDelete(e) {
+        console.log(e);
+        console.log(this.deleteModal.data)
+        this.$refs.modalRef.validateFields().then(() => {
+            this.$inertia.delete(route('manage.course.contents.destroy',
+                { course: this.deleteModal.data.courseId, content: this.deleteModal.data.contentId }), {
+                onSuccess: (page) => {
+                    console.log(page);
+                    this.deleteModal.isOpen = false;
+                },
+                onError: (err) => {
+                    console.log(err);
+                }
+            });
+        })
     }
 };
 </script>
+<style scoped>
+.container {
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+}
+
+/* 標題樣式 */
+.ant-typography-title {
+    margin-bottom: 16px;
+
+}
+
+/* 列表樣式 */
+ol {
+    padding-left: 20px;
+
+}
+
+li {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.inertia-link {
+    color: #1890ff;
+    transition: color 0.3s;
+}
+
+.inertia-link:hover {
+    color: #40a9ff;
+}
+
+input {
+    border: 1px solid #d9d9d9;
+    padding: 4px 11px;
+    border-radius: 2px;
+    box-shadow: none;
+}
+
+input:focus {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+/* 圖標樣式 */
+.anticon {
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+}
+</style>

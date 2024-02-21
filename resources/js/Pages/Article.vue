@@ -27,10 +27,10 @@ export default {
             <h2 class="font-bold text-2xl text-gray-800">{{ article.title_en}}</h2>
             <div v-html="article.content_en"/>
         </div>
-        
+
     </MemberLayout>
 
-    
+
 </template>
 
 <style >
