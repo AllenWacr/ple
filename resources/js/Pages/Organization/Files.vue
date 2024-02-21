@@ -21,7 +21,8 @@
         <input 
             ref="uploader" 
             style="display: none"
-            type="file" 
+            type="file"
+            enctype="multipart/form-data"
             @change="onFileChanged"
             multiple
         >
@@ -126,7 +127,7 @@
             },
         onFileChanged(e) {
             console.log(this.fileSizeLimit);
-            this.selectedFile = e.target.files[0];
+            this.selectedFile = e.target.files;
             let fileSizeExceed=false;
             [...e.target.files].forEach(f=>{
                 if(f.size>this.fileSizeLimit){
@@ -134,6 +135,16 @@
                 }
                 console.log(f.size);
             })
+            if(!fileSizeExceed){
+              this.$inertia.post(route('manage.files.store'), this.selectedFile, {
+                onSuccess: (page) => {
+                  console.log(page);
+                },
+                onError: (err) => {
+                  console.log(err);
+                }
+              });
+            }
             console.log(fileSizeExceed);
 
             // Do whatever you need with the file, liek reading it with FileReader

@@ -127,6 +127,7 @@ import {
 import { defineComponent, reactive, ref } from "vue";
 import { message } from 'ant-design-vue';
 import CropperModal from "@/Components/Member/CropperModal.vue";
+import { InboxOutlined } from '@ant-design/icons-vue';
 
 export default {
     components: {
@@ -136,6 +137,7 @@ export default {
         PlusOutlined,
         InfoCircleFilled,
         CropperModal,
+        InboxOutlined,
     },
     props: ["course", "content", "content_types"],
     data() {
@@ -199,19 +201,12 @@ export default {
             })
         },
         handleFileChange(info) {
+            console.log(info.file.originFileObj);
             if (info.file.status !== 'uploading') {
                 console.log(info.file, info.fileList);
             }
             if (info.file.status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully.`);
-                this.content.content = info.fileList.map(file => {
-                    return {
-                        name: file.name,
-                        status: file.status,
-                        response: file.response,
-                        // add other file properties you need
-                    };
-                });
             } else if (info.file.status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }

@@ -270,9 +270,10 @@ export default {
       console.log('Close delete module modal.');
     },
     onRecordDelete(e) {
+      console.log('to delete');
       console.log(e);
       console.log(this.moduleDeleteModal.data)      
-      this.$inertia.delete(route('manage.course.destroyModule', this.course.id), this.moduleDeleteModal.data, {
+      this.$inertia.post(route('manage.course.destroyModule', this.course.id), this.moduleDeleteModal.data, {
         onSuccess: (page) => {
           console.log(page);
           this.moduleDeleteModal.isOpen = false;

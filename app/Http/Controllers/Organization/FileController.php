@@ -39,14 +39,14 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->hasFile);
-        // if ($request->hasFile('content.content')) {
-        if ($request->file('file')) {
-            $files = $request->file('content');
-
+        // return response()->json(['message' => $request->Session]);
+        $originFile = $request->content;
+        $files = $request->file($originFile);
+        if ($files) {
             foreach ($files as $file) {
-                $filename = $file->name;
-                $path = $file->storeAs('{$request->Session->id}/uploads', $filename, 'file');
+                $filename = $file->getClientOriginalName();
+                $getId = auth()->user()->id;
+                $path = $file->storeAs((string)$getId . '/uploads', $filename, 'file');
 
                 // Store file into the database
                 // ...
@@ -95,7 +95,7 @@ class FileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->file);
     }
 
     /**

@@ -14,7 +14,7 @@
       <div class="bg-white relative shadow rounded-lg overflow-x-auto">
         <a-table :dataSource="courses" :columns="columns">
           <template #headerCell="{ column }">
-            {{ column.i18n ? $t(column.i18n) : column.title }}
+            <!-- {{ column.i18n ? $t(column.i18n) : column.title }} --> {{ column.title }}
           </template>
           <template #bodyCell="{ column, text, record, index }">
             <template v-if="column.dataIndex == 'operation'">
