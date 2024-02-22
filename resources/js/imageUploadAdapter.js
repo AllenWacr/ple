@@ -70,4 +70,3 @@ export default class UploadAdapter {
         this.xhr.send( data );
     }
 }
-
