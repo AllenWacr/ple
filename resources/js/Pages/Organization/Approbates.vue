@@ -30,7 +30,7 @@
             autocomplete="off"
             :rules="rules"
             :validate-messages="validateMessages"
-            
+
         >
             <a-form-item label="Name" name="name">
                 <a-input v-model:value="modal.data.name" />
@@ -72,13 +72,13 @@
                         upload
                     </a-button>
                 </a-upload>
-            </a-form-item>            
+            </a-form-item>
         </a-form>
         <template #footer>
             <a-button v-if="modal.mode=='EDIT'" key="Update" type="primary"  @click="updateRecord()">更新</a-button>
             <a-button v-if="modal.mode=='CREATE'"  key="Store" type="primary" @click="storeRecord()">新增</a-button>
         </template>
-    </a-modal>    
+    </a-modal>
     <!-- Modal End-->
     </OrganizationLayout>
 
@@ -95,7 +95,7 @@ export default {
         OrganizationLayout,
         UploadOutlined,
         RestFilled,
-        quillEditor,   
+        quillEditor,
     },
     props: ['approbates'],
     data() {
@@ -157,7 +157,7 @@ export default {
             this.modal.data.organization_id=this.$page.props.current_organization.id,
             this.modal.data.media=[],
             this.modal.mode="CREATE";
-            
+
             this.modal.isOpen=true;
         },
         editRecord(record){

@@ -44,7 +44,6 @@ class CourseController extends Controller
         //         'organization_id'=>session('organization')->id,
         //     ])
         // ]);
-        
     }
 
     /**
@@ -142,7 +141,7 @@ class CourseController extends Controller
     public function updateModule(Course $course, Request $request)
     {
         $modules=($course->modules);
-        
+
         foreach ($modules as $key => $module) {
             if (isset($module['value']) && $module['value'] == $request->value) {
                 $modules[$key]['label'] = $request->label;
@@ -154,12 +153,9 @@ class CourseController extends Controller
     }
 
     public function destroyModule(Course $course, Request $request) {
-        // dd($course);
-        // dd($request->all());
         $modules = $course->modules;
         $newModules = [];
         
-
         foreach ($modules as $module) {
             if ($module['value'] == $request->value && $module['label'] == $request->label) {
                 continue;

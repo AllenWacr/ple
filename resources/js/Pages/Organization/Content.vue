@@ -16,18 +16,9 @@
         </div>
         <div class="container mx-auto pt-5">
             <div class="bg-white relative shadow rounded-lg overflow-x-auto">
-                <a-form
-                    ref="modalRef"
-                    :model="content"
-                    name="Lecture"
-                    :label-col="{ span: 8 }"
-                    :wrapper-col="{ span: 16 }"
-                    autocomplete="off"
-                    :rules="rules"
-                    :validate-messages="validateMessages"
-                    enctype="multipart/form-data"
-                    @finish="onFinish"
-                >
+                <a-form ref="modalRef" :model="content" name="Lecture" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }"
+                    autocomplete="off" :rules="rules" :validate-messages="validateMessages" enctype="multipart/form-data"
+                    @finish="onFinish">
                     <a-form-item :label="$t('module')" name="module">
                         <a-select v-model:value="content.module" :options="course.modules" />
                     </a-form-item>
@@ -112,11 +103,9 @@
                 </a-form>
             </div>
         </div>
-
-        
     </OrganizationLayout>
 </template>
-  
+
 <script>
 import OrganizationLayout from "@/Layouts/OrganizationLayout.vue";
 import {
