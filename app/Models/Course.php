@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
-    protected $fillable=['organization_id','modules','title','learn','brief','description','image','start_on','finsh_on','published','user_id'];
+    protected $fillable=['organization_id','modules','title','learn','brief','description','image','start_on','finish_on','published','user_id'];
     protected $casts=['modules'=>'json'];
     protected $appends=['teachers'];
     
