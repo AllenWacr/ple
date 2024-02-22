@@ -11,7 +11,7 @@
                 <a-button @click="goBack" type="dashed">Go Back</a-button>
             </div>
             <div class="flex-auto pb-3 text-right">
-                <a-button @click="" type="primary">Edit</a-button>
+                <a-button @click="courseEditRecord" type="primary">Edit</a-button>
                 <inertia-link :href="route('manage.course.contents.index', course.id)" class="ant-btn">{{
                     $t("View Contents") }}</inertia-link>
             </div>
@@ -60,6 +60,34 @@
         <!-- Modal Start for Edit Course -->
         <a-modal v-model:visible="courseEditModal.isOpen" :title="$t(courseEditModal.title)" width="60%"
             :afterClose="courseEditModalClose" @ok="onCourseRecordUpdate" ok-text="Save">
+            <a-form ref="modalRef" :model="courseEditModal.dat8a" name="Certificate" :label-col="{ span: 8 }"
+                :wrapper-col="{ span: 16 }" autocomplete="off" :rules="rules" :validate-messages="validateMessages"
+                enctype="multipart/from-data">
+                <a-form-item label="Title" name="title">
+                    <a-input v-model:value="createModal.data.title" />
+                </a-form-item>
+                <a-form-item label="Learn" name="learn">
+                    <a-textarea v-model:value="createModal.data.learn" />
+                </a-form-item>
+                <a-form-item label="Brief" name="brief">
+                    <a-textarea v-model:value="createModal.data.brief" />
+                </a-form-item>
+                <a-form-item label="Description" name="description">
+                    <a-textarea v-model:value="createModal.data.description" />
+                </a-form-item>
+                <a-form-item label="Image" name="image">
+                    <a-input v-model:value="createModal.data.image" />
+                </a-form-item>
+                <a-form-item label="Start on" name="start_on">
+                    <a-date-picker v-model:value="createModal.data.start_on" :valueFormat="dateFormat" />
+                </a-form-item>
+                <a-form-item label="Finish on" name="finish_on">
+                    <a-date-picker v-model:value="createModal.data.finish_on" :valueFormat="dateFormat" />
+                </a-form-item>
+                <a-form-item label="Published" name="published">
+                    <a-switch v-model:checked="createModal.data.published" />
+                </a-form-item>
+            </a-form>
         </a-modal>
 
         <!-- Modal Start for Create Module -->
