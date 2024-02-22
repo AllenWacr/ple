@@ -51,6 +51,12 @@ class FileController extends Controller
 
                 // Store file into the database
                 // ...
+                $data['user_id']=$getId;
+                $data['uuid']=$filename;
+                $data['file_name']=$filename;
+                $data['file_path']=$path;
+                $data['file_size']=$file->getSize();
+                File::create($data);
 
                 // Samples
                 // $file->getSize();

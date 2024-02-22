@@ -220,7 +220,7 @@ export default {
             this.courseEditModal.data = {
                 title: this.course.title, learn: this.course.learn, brief: this.course.brief,
                 description: this.course.description, image: this.course.image, start_on: this.course.start_on,
-                finish_on: this.course.finish_on, published: this.course.published }
+                finish_on: this.course.finish_on, published: this.course.published? true : false }
             this.courseEditModal.mode = "UPDATE";
             this.courseEditModal.isOpen = true;
             this.moduleCreateModal.isOpen = false;
