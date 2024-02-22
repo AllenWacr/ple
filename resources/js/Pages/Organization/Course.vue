@@ -60,32 +60,32 @@
         <!-- Modal Start for Edit Course -->
         <a-modal v-model:visible="courseEditModal.isOpen" :title="$t(courseEditModal.title)" width="60%"
             :afterClose="courseEditModalClose" @ok="onCourseRecordUpdate" ok-text="Save">
-            <a-form ref="modalRef" :model="courseEditModal.dat8a" name="Certificate" :label-col="{ span: 8 }"
+            <a-form ref="modalRef" :model="courseEditModal.data" name="Certificate" :label-col="{ span: 8 }"
                 :wrapper-col="{ span: 16 }" autocomplete="off" :rules="rules" :validate-messages="validateMessages"
                 enctype="multipart/from-data">
                 <a-form-item label="Title" name="title">
-                    <a-input v-model:value="createModal.data.title" />
+                    <a-input v-model:value="courseEditModal.data.title" />
                 </a-form-item>
                 <a-form-item label="Learn" name="learn">
-                    <a-textarea v-model:value="createModal.data.learn" />
+                    <a-textarea v-model:value="courseEditModal.data.learn" />
                 </a-form-item>
                 <a-form-item label="Brief" name="brief">
-                    <a-textarea v-model:value="createModal.data.brief" />
+                    <a-textarea v-model:value="courseEditModal.data.brief" />
                 </a-form-item>
                 <a-form-item label="Description" name="description">
-                    <a-textarea v-model:value="createModal.data.description" />
+                    <a-textarea v-model:value="courseEditModal.data.description" />
                 </a-form-item>
                 <a-form-item label="Image" name="image">
-                    <a-input v-model:value="createModal.data.image" />
+                    <a-input v-model:value="courseEditModal.data.image" />
                 </a-form-item>
                 <a-form-item label="Start on" name="start_on">
-                    <a-date-picker v-model:value="createModal.data.start_on" :valueFormat="dateFormat" />
+                    <a-date-picker v-model:value="courseEditModal.data.start_on" :valueFormat="dateFormat" />
                 </a-form-item>
                 <a-form-item label="Finish on" name="finish_on">
-                    <a-date-picker v-model:value="createModal.data.finish_on" :valueFormat="dateFormat" />
+                    <a-date-picker v-model:value="courseEditModal.data.finish_on" :valueFormat="dateFormat" />
                 </a-form-item>
                 <a-form-item label="Published" name="published">
-                    <a-switch v-model:checked="createModal.data.published" />
+                    <a-switch v-model:checked="courseEditModal.data.published" />
                 </a-form-item>
             </a-form>
         </a-modal>
@@ -137,6 +137,7 @@ import {
     LoadingOutlined,
     PlusOutlined,
     InfoCircleFilled,
+DingdingOutlined,
 } from "@ant-design/icons-vue";
 import { defineComponent, reactive } from "vue";
 import CropperModal from "@/Components/Member/CropperModal.vue";
@@ -156,6 +157,7 @@ export default {
         return {
             open: false,
             individualContents: [],
+            dateFormat: 'YYYY-MM-DD',
             courseEditModal: {
                 isOpen: false,
                 data: {},
@@ -215,7 +217,10 @@ export default {
             window.history.back();
         },
         courseEditRecord() {
-            this.courseEditModal.data = {};
+            this.courseEditModal.data = {
+                title: this.course.title, learn: this.course.learn, brief: this.course.brief,
+                description: this.course.description, image: this.course.image, start_on: this.course.start_on,
+                finish_on: this.course.finish_on, published: this.course.published }
             this.courseEditModal.mode = "UPDATE";
             this.courseEditModal.isOpen = true;
             this.moduleCreateModal.isOpen = false;
@@ -223,13 +228,13 @@ export default {
             this.moduleDeleteModal.isOpen = false;
         },
         courseEditModalClose() {
-            this.courseEditModal.isOpen = false;
+            console.log('Close edit course modal.');
         },
         onCourseRecordUpdate(e) {
             console.log(e);
             console.log(this.courseEditModal.data)
             this.$refs.modalRef.validateFields().then(() => {
-                this.$inertia.patch(route('manage.course.update', this.course.id), this.courseEditModal.data, {
+                this.$inertia.patch(route('manage.courses.update', this.course.id), this.courseEditModal.data, {
                     onSuccess: (page) => {
                         console.log(page);
                         this.courseEditModal.isOpen = false;

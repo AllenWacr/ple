@@ -52,6 +52,7 @@ class ContentController extends Controller
     {
         $data=$request->all();
         $data['course_id']=$course->id;
+        $data['user_id']=auth()->user()->id;
         Content::create($data);
         return redirect()->route('manage.course.contents.index',$course->id);
     }

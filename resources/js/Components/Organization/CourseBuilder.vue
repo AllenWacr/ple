@@ -7,8 +7,8 @@
                     <p><strong>Learn:</strong> {{ course.learn }}</p>
                     <p><strong>Brief:</strong> {{ course.brief }}</p>
                     <p><strong>Description:</strong> {{ course.description }}</p>
-                    <p><strong>Start On:</strong> {{ course.start_on | formatDate }}</p>
-                    <p><strong>Finish On:</strong> {{ course.finish_on | formatDate }}</p>
+                    <p><strong>Start On:</strong> {{ course.start_on }}</p>
+                    <p><strong>Finish On:</strong> {{ course.finish_on }}</p>
                 </a-typography>
                 <a-alert v-if="!course.published" type="warning" message="This course is not yet published" banner
                     class="course-alert" />
@@ -17,7 +17,7 @@
         </a-col>
         <a-col :xs="24" :sm="24" :md="8" :lg="6" :xl="4">
             <a-card title="Course Menu" class="course-menu-card">
-                <a-menu mode="inline" v-model:selectedKeys="selectedKeys">
+                <a-menu mode="inline">
                     <a-menu-item key="files">
                         <inertia-link :href="route('manage.files.index')">Files</inertia-link>
                     </a-menu-item>

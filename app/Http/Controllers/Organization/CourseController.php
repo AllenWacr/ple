@@ -54,6 +54,7 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $data=$request->all();
         $data['user_id']=auth()->user()->id;
         $data['organization_id']=session('organization')->id;

@@ -94,9 +94,9 @@
                     <a-form-item :label="$t('finish_on')" name="finish_on">
                         <a-switch v-model:checked="content.published" />
                     </a-form-item>
-                    <a-form-item :label="$t('user_id')" name="user_id">
+                    <!-- <a-form-item :label="$t('user_id')" name="user_id">
                         <a-input v-model:value="content.user_id" />
-                    </a-form-item>
+                    </a-form-item> -->
                     <div class="flex flex-row item-center justify-center">
                         <a-button type="primary" html-type="submit">{{ $t('submit') }}</a-button>
                     </div>
