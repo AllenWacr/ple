@@ -19,7 +19,7 @@
 
         <CourseBuilder :course="course">
             <div class="flex-auto pb-3 text-left">
-                <a-button @click="createModuleRecord" type="primary">Create Module</a-button>
+                <a-button @click="moduleCreateRecord" type="primary">Create Module</a-button>
             </div>
             <a-collapse>
                 <template v-for="(module, index) in course.modules" :key="`module-${index}`">
@@ -57,7 +57,12 @@
             </a-collapse>
         </CourseBuilder>
 
-        <!-- Modal Start -->
+        <!-- Modal Start for Edit Course -->
+        <a-modal v-model:visible="courseEditModal.isOpen" :title="$t(courseEditModal.title)" width="60%"
+            :afterClose="courseEditModalClose" @ok="onCourseRecordUpdate" ok-text="Save">
+        </a-modal>
+
+        <!-- Modal Start for Create Module -->
         <a-modal v-model:visible="moduleCreateModal.isOpen" :title="$t(moduleCreateModal.title)" width="60%"
             :afterClose="moduleCreateModalClose" @ok="onRecordSave" ok-text="Save">
             <a-form ref="modalFormRef" :model="moduleCreateModal.data" name="Certificate" :label-col="{ span: 8 }"
@@ -70,7 +75,7 @@
         </a-modal>
         <!-- Modal End -->
 
-        <!-- Modal Start -->
+        <!-- Modal Start for Edit Module -->
         <a-modal v-model:visible="moduleEditModal.isOpen" :title="$t(moduleEditModal.title)" width="60%"
             :afterClose="moduleEditModalClose" @ok="onRecordUpdate" ok-text="Update">
             <a-form ref="modalRef" :model="moduleEditModal.data" name="Certificate" :label-col="{ span: 8 }"
@@ -123,6 +128,12 @@ export default {
         return {
             open: false,
             individualContents: [],
+            courseEditModal: {
+                isOpen: false,
+                data: {},
+                title: "Edit Course",
+                mode: "",
+            },
             moduleCreateModal: {
                 isOpen: false,
                 data: {},
@@ -175,7 +186,33 @@ export default {
         goBack() {
             window.history.back();
         },
-        createModuleRecord() {
+        courseEditRecord() {
+            this.courseEditModal.data = {};
+            this.courseEditModal.mode = "UPDATE";
+            this.courseEditModal.isOpen = true;
+            this.moduleCreateModal.isOpen = false;
+            this.moduleEditModal.isOpen = false;
+            this.moduleDeleteModal.isOpen = false;
+        },
+        courseEditModalClose() {
+            this.courseEditModal.isOpen = false;
+        },
+        onCourseRecordUpdate(e) {
+            console.log(e);
+            console.log(this.courseEditModal.data)
+            this.$refs.modalRef.validateFields().then(() => {
+                this.$inertia.patch(route('manage.course.update', this.course.id), this.courseEditModal.data, {
+                    onSuccess: (page) => {
+                        console.log(page);
+                        this.courseEditModal.isOpen = false;
+                    },
+                    onError: (err) => {
+                        console.log(err);
+                    }
+                });
+            })
+        },
+        moduleCreateRecord() {
             this.moduleCreateModal.data = {};
             this.moduleCreateModal.mode = "CREATE";
             this.moduleCreateModal.isOpen = true;

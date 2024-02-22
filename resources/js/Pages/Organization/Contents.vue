@@ -12,7 +12,7 @@
             </div>
             <div class="flex-auto pb-3 text-right">
                 <inertia-link :href="route('manage.courses.edit', course.id)" class="ant-btn">{{
-                    $t("View Contents") }}</inertia-link>
+                    $t("View Modules") }}</inertia-link>
                 <a-button :href="route('manage.course.contents.create', course.id)" type="primary">{{ $t("create_content")
                 }}</a-button>
             </div>
@@ -227,6 +227,12 @@ export default {
         };
     },
     created() { },
+    mounted() {
+        document.addEventListener('click', this.handleClickOutside);
+    },
+    beforeDestroy() {
+        document.removeEventListener('click', this.handleClickOutside);
+    },
     methods: {
         goBack() {
             window.history.back();
@@ -247,43 +253,38 @@ export default {
                 }
             })
         },
+        // Note: this method might be no use.
         handleClickOutside(event) {
             if (this.courseModule.edit && !this.$refs.input.contains(event.target)) {
                 this.courseModule.edit = false;
             }
         },
-    },
-    mounted() {
-        document.addEventListener('click', this.handleClickOutside);
-    },
-    beforeDestroy() {
-        document.removeEventListener('click', this.handleClickOutside);
-    },
-    deleteRecord(courseId, contentId) {
+        deleteRecord(courseId, contentId) {
         this.deleteModal.data = {};
         this.deleteModal.mode = "DELETE";
         this.deleteModal.isOpen = true;
         this.deleteModal.data.contentId = contentId;
         this.deleteModal.data.courseId = courseId;
-    },
-    deleteModalClose() {
-        console.log('Close delete modal');
-    },
-    onRecordDelete(e) {
-        console.log(e);
-        console.log(this.deleteModal.data)
-        this.$refs.modalRef.validateFields().then(() => {
-            this.$inertia.delete(route('manage.course.contents.destroy',
-                { course: this.deleteModal.data.courseId, content: this.deleteModal.data.contentId }), {
-                onSuccess: (page) => {
-                    console.log(page);
-                    this.deleteModal.isOpen = false;
-                },
-                onError: (err) => {
-                    console.log(err);
-                }
-            });
-        })
+        },
+        deleteModalClose() {
+            console.log('Close delete modal');
+        },
+        onRecordDelete(e) {
+            console.log(e);
+            console.log(this.deleteModal.data)
+            this.$refs.modalRef.validateFields().then(() => {
+                this.$inertia.delete(route('manage.course.contents.destroy',
+                    { course: this.deleteModal.data.courseId, content: this.deleteModal.data.contentId }), {
+                    onSuccess: (page) => {
+                        console.log(page);
+                        this.deleteModal.isOpen = false;
+                    },
+                    onError: (err) => {
+                        console.log(err);
+                    }
+                });
+            })
+        }
     }
 };
 </script>
